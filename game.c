@@ -127,6 +127,11 @@ void PlayerMove(char board[Row][Col], int row, int col)
 			default:
 				break;	
 		}
+		
+		printf("B玩家下第%d棋, 請輸入棋子座標: ", i+1);
+		scanf("%d %d", &x, &y);
+		coor_B[i][0] = x;
+		coor_B[i][1] = y;
 	}
 	
 		
