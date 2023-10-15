@@ -1,0 +1,2 @@
+# boardgame
+SoC sencond project
