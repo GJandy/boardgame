@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define BOARD_SIZE 4
 #define n 4
@@ -11,6 +12,17 @@ typedef struct {
 } ChessPiece;
 
 
+int RandomInteger() {
+    // 設定亂數種子以確保每次運行產生不同的隨機數
+    srand(time(NULL));
+
+    // 使用rand()函數生成0到3之間的隨機整數
+    int randomValue = rand() % 4;
+
+    //printf("隨機整數: %d\n", randomValue);
+
+    return randomValue;
+}
 
 int isOnBoardEdge(ChessPiece piece) {
     return (piece.x == 0 || piece.x == BOARD_SIZE - 1 || piece.y == 0 || piece.y == BOARD_SIZE - 1);
@@ -123,671 +135,668 @@ void updateAttack(ChessPiece piece, int** attack, int buff){
         }
     }
     else {
-        if (isOnBoardEdge(piece))
+        
+        if (piece.x == 3 && piece.y == 0)
         {
-            if (piece.x == 3 && piece.y == 0)
+            switch (piece.type)
             {
-                switch (piece.type)
-                {
-                    case 3:
-                        if (buff == 3)
-                        {
-                            attack[piece.x][piece.y] += 10;
-                            attack[piece.x - 1][piece.y] += 5;
-                            attack[piece.x][piece.y + 1] += 5;
-                            attack[piece.x - 1][piece.y + 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 8;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x][piece.y + 1] += 4;
-                            attack[piece.x - 1][piece.y + 1] += 4;
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 6;
-                            attack[piece.x - 1][piece.y] += 3;
-                            attack[piece.x][piece.y + 1] += 3;
-                            attack[piece.x - 1][piece.y + 1] += 3;
-                        }
+                case 3:
+                    if (buff == 3)
+                    {
+                        attack[piece.x][piece.y] += 10;
+                        attack[piece.x - 1][piece.y] += 5;
+                        attack[piece.x][piece.y + 1] += 5;
+                        attack[piece.x - 1][piece.y + 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 8;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x][piece.y + 1] += 4;
+                        attack[piece.x - 1][piece.y + 1] += 4;
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 6;
+                        attack[piece.x - 1][piece.y] += 3;
+                        attack[piece.x][piece.y + 1] += 3;
+                        attack[piece.x - 1][piece.y + 1] += 3;
+                    }
                         
-                        break;
-                    case 2:
-                        if (buff == 2)
-                        {
-                            attack[piece.x][piece.y] += 20;
-                            attack[piece.x - 1][piece.y] += 10;
-                            attack[piece.x][piece.y + 1] += 10;
-                            attack[piece.x - 1][piece.y + 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 12;
-                            attack[piece.x - 1][piece.y] += 6;
-                            attack[piece.x][piece.y + 1] += 6;
-                            attack[piece.x - 1][piece.y + 1] += 3; 
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 8;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x][piece.y + 1] += 4;
-                            attack[piece.x - 1][piece.y + 1] += 2; 
-                        }
+                    break;
+                case 2:
+                    if (buff == 2)
+                    {
+                        attack[piece.x][piece.y] += 20;
+                        attack[piece.x - 1][piece.y] += 10;
+                        attack[piece.x][piece.y + 1] += 10;
+                        attack[piece.x - 1][piece.y + 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 12;
+                        attack[piece.x - 1][piece.y] += 6;
+                        attack[piece.x][piece.y + 1] += 6;
+                        attack[piece.x - 1][piece.y + 1] += 3; 
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 8;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x][piece.y + 1] += 4;
+                        attack[piece.x - 1][piece.y + 1] += 2; 
+                    }
                         
-                        break;
-                    case 1:
-                        if (buff != 5)
-                        {
-                            attack[piece.x][piece.y] += 12;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x][piece.y + 1] += 4; 
-                        }
-                        else
-                        {
-                           attack[piece.x][piece.y] += 9;
-                            attack[piece.x - 1][piece.y] += 3;
-                            attack[piece.x][piece.y + 1] += 3; 
-                        }
+                    break;
+                case 1:
+                    if (buff != 5)
+                    {
+                        attack[piece.x][piece.y] += 12;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x][piece.y + 1] += 4; 
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 9;
+                        attack[piece.x - 1][piece.y] += 3;
+                        attack[piece.x][piece.y + 1] += 3; 
+                    }
                         
-                        break;
-                    case 0:
-                        if (buff == 4)
-                            attack[piece.x][piece.y] += 11;
-                        else
-                            attack[piece.x][piece.y] += 10;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else if (piece.x == 0 && piece.y == 0)
-            {
-                switch (piece.type)
-                {
-                    case 3:
-                        if (buff == 3)
-                        {
-                            attack[piece.x][piece.y] += 10;
-                            attack[piece.x + 1][piece.y] += 5;
-                            attack[piece.x][piece.y + 1] += 5;
-                            attack[piece.x + 1][piece.y + 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 8;
-                            attack[piece.x + 1][piece.y] += 4;
-                            attack[piece.x][piece.y + 1] += 4;
-                            attack[piece.x + 1][piece.y + 1] += 4;
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 6;
-                            attack[piece.x + 1][piece.y] += 3;
-                            attack[piece.x][piece.y + 1] += 3;
-                            attack[piece.x + 1][piece.y + 1] += 3;
-                        }
-                        
-                        break;
-                    case 2:
-                        if (buff == 2)
-                        {
-                            attack[piece.x][piece.y] += 20;
-                            attack[piece.x + 1][piece.y] += 10;
-                            attack[piece.x][piece.y + 1] += 10;
-                            attack[piece.x + 1][piece.y + 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 12;
-                            attack[piece.x + 1][piece.y] += 6;
-                            attack[piece.x][piece.y + 1] += 6;
-                            attack[piece.x + 1][piece.y + 1] += 3; 
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 8;
-                            attack[piece.x + 1][piece.y] += 4;
-                            attack[piece.x][piece.y + 1] += 4;
-                            attack[piece.x + 1][piece.y + 1] += 2; 
-                        }
-                        
-                        break;
-                    case 1:
-                        if (buff != 5)
-                        {
-                            attack[piece.x][piece.y] += 12;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x][piece.y + 1] += 4; 
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 9;
-                            attack[piece.x + 1][piece.y] += 3;
-                            attack[piece.x][piece.y + 1] += 3; 
-                        }
-                        
-                        break;
-                    case 0:
-                        if (buff == 4)
-                            attack[piece.x][piece.y] += 11;
-                        else
-                            attack[piece.x][piece.y] += 10;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else if (piece.x == 0 && piece.y == 3)
-            {
-                switch (piece.type)
-                {
-                    case 3:
-                        if (buff == 3)
-                        {
-                            attack[piece.x][piece.y] += 10;
-                            attack[piece.x + 1][piece.y] += 5;
-                            attack[piece.x][piece.y - 1] += 5;
-                            attack[piece.x + 1][piece.y - 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 8;
-                            attack[piece.x + 1][piece.y] += 4;
-                            attack[piece.x][piece.y - 1] += 4;
-                            attack[piece.x + 1][piece.y - 1] += 4;
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 6;
-                            attack[piece.x + 1][piece.y] += 3;
-                            attack[piece.x][piece.y - 1] += 3;
-                            attack[piece.x + 1][piece.y - 1] += 3;
-                        }
-                        
-                        break;
-                    case 2:
-                        if (buff == 2)
-                        {
-                            attack[piece.x][piece.y] += 20;
-                            attack[piece.x + 1][piece.y] += 10;
-                            attack[piece.x][piece.y - 1] += 10;
-                            attack[piece.x + 1][piece.y - 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 12;
-                            attack[piece.x + 1][piece.y] += 6;
-                            attack[piece.x][piece.y - 1] += 6;
-                            attack[piece.x + 1][piece.y - 1] += 3; 
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 8;
-                            attack[piece.x + 1][piece.y] += 4;
-                            attack[piece.x][piece.y - 1] += 4;
-                            attack[piece.x + 1][piece.y - 1] += 2; 
-                        }
-                        
-                        break;
-                    case 1:
-                        if (buff != 5)
-                        {
-                            attack[piece.x][piece.y] += 12;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x][piece.y - 1] += 4; 
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 9;
-                            attack[piece.x + 1][piece.y] += 3;
-                            attack[piece.x][piece.y - 1] += 3; 
-                        }
-                        
-                        break;
-                    case 0:
-                        if (buff == 4)
-                            attack[piece.x][piece.y] += 11;
-                        else
-                            attack[piece.x][piece.y] += 10;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                switch (piece.type)
-                {
-                    case 3:
-                        if (buff == 3)
-                        {
-                            attack[piece.x][piece.y] += 10;
-                            attack[piece.x - 1][piece.y] += 5;
-                            attack[piece.x][piece.y - 1] += 5;
-                            attack[piece.x - 1][piece.y - 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 8;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x][piece.y - 1] += 4;
-                            attack[piece.x - 1][piece.y - 1] += 4;
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 6;
-                            attack[piece.x - 1][piece.y] += 3;
-                            attack[piece.x][piece.y - 1] += 3;
-                            attack[piece.x - 1][piece.y - 1] += 3;
-                        }
-                        
-                        break;
-                    case 2:
-                        if (buff == 2)
-                        {
-                            attack[piece.x][piece.y] += 20;
-                            attack[piece.x - 1][piece.y] += 10;
-                            attack[piece.x][piece.y - 1] += 10;
-                            attack[piece.x - 1][piece.y - 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 12;
-                            attack[piece.x - 1][piece.y] += 6;
-                            attack[piece.x][piece.y - 1] += 6;
-                            attack[piece.x - 1][piece.y - 1] += 3; 
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 8;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x][piece.y - 1] += 4;
-                            attack[piece.x - 1][piece.y - 1] += 2; 
-                        }
-                        
-                        break;
-                    case 1:
-                        if (buff != 5)
-                        {
-                            attack[piece.x][piece.y] += 12;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x][piece.y - 1] += 4; 
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 9;
-                            attack[piece.x - 1][piece.y] += 3;
-                            attack[piece.x][piece.y - 1] += 3; 
-                        }
-                        
-                        break;
-                    case 0:
-                        if (buff == 4)
-                            attack[piece.x][piece.y] += 11;
-                        else
-                            attack[piece.x][piece.y] += 10;
-                        break;
-                    default:
-                        break;
-                }
+                    break;
+                case 0:
+                    if (buff == 4)
+                        attack[piece.x][piece.y] += 11;
+                    else
+                        attack[piece.x][piece.y] += 10;
+                    break;
+                default:
+                    break;
             }
         }
-        else {
-            if (piece.x == 3)
+        else if (piece.x == 0 && piece.y == 0)
+        {
+            switch (piece.type)
             {
-                switch (piece.type)
-                {
-                    case 3:
-                        if (buff == 3)
-                        {
-                            attack[piece.x][piece.y] += 5;
-                            attack[piece.x][piece.y - 1] += 5;
-                            attack[piece.x][piece.y + 1] += 5;
-                            attack[piece.x - 1][piece.y + 1] += 5;
-                            attack[piece.x - 1][piece.y - 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 4;
-                            attack[piece.x][piece.y - 1] += 4;
-                            attack[piece.x][piece.y + 1] += 4;
-                            attack[piece.x - 1][piece.y + 1] += 4;
-                            attack[piece.x - 1][piece.y - 1] += 4;
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 3;
-                            attack[piece.x][piece.y - 1] += 3;
-                            attack[piece.x][piece.y + 1] += 3;
-                            attack[piece.x - 1][piece.y + 1] += 3;
-                            attack[piece.x - 1][piece.y - 1] += 3;
-                        }
+                case 3:
+                    if (buff == 3)
+                    {
+                        attack[piece.x][piece.y] += 10;
+                        attack[piece.x + 1][piece.y] += 5;
+                        attack[piece.x][piece.y + 1] += 5;
+                        attack[piece.x + 1][piece.y + 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 8;
+                        attack[piece.x + 1][piece.y] += 4;
+                        attack[piece.x][piece.y + 1] += 4;
+                        attack[piece.x + 1][piece.y + 1] += 4;
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 6;
+                        attack[piece.x + 1][piece.y] += 3;
+                        attack[piece.x][piece.y + 1] += 3;
+                        attack[piece.x + 1][piece.y + 1] += 3;
+                    }
                         
-                        break;
-                    case 2:
-                        if (buff == 2)
-                        {
-                            attack[piece.x][piece.y] += 10;
-                            attack[piece.x][piece.y - 1] += 10;
-                            attack[piece.x][piece.y + 1] += 10;
-                            attack[piece.x - 1][piece.y] += 5;
-                            attack[piece.x - 1][piece.y - 1] += 5;
-                            attack[piece.x - 1][piece.y + 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 6;
-                            attack[piece.x][piece.y - 1] += 6;
-                            attack[piece.x][piece.y + 1] += 6;
-                            attack[piece.x - 1][piece.y] += 3;
-                            attack[piece.x - 1][piece.y - 1] += 3;
-                            attack[piece.x - 1][piece.y + 1] += 3; 
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 4;
-                            attack[piece.x][piece.y - 1] += 4;
-                            attack[piece.x][piece.y + 1] += 4;
-                            attack[piece.x - 1][piece.y] += 2;
-                            attack[piece.x - 1][piece.y - 1] += 2;
-                            attack[piece.x - 1][piece.y + 1] += 2;
-                        }
+                    break;
+                case 2:
+                    if (buff == 2)
+                    {
+                        attack[piece.x][piece.y] += 20;
+                        attack[piece.x + 1][piece.y] += 10;
+                        attack[piece.x][piece.y + 1] += 10;
+                        attack[piece.x + 1][piece.y + 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 12;
+                        attack[piece.x + 1][piece.y] += 6;
+                        attack[piece.x][piece.y + 1] += 6;
+                        attack[piece.x + 1][piece.y + 1] += 3; 
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 8;
+                        attack[piece.x + 1][piece.y] += 4;
+                        attack[piece.x][piece.y + 1] += 4;
+                        attack[piece.x + 1][piece.y + 1] += 2; 
+                    }
                         
-                        break;
-                    case 1:
-                        if (buff != 5)
-                        {
-                            attack[piece.x][piece.y] += 8;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x][piece.y - 1] += 4;
-                            attack[piece.x][piece.y + 1] += 4; 
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 6;
-                            attack[piece.x - 1][piece.y] += 3;
-                            attack[piece.x][piece.y - 1] += 3;
-                            attack[piece.x][piece.y + 1] += 3;
-                        }
+                    break;
+                case 1:
+                    if (buff != 5)
+                    {
+                        attack[piece.x][piece.y] += 12;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x][piece.y + 1] += 4; 
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 9;
+                        attack[piece.x + 1][piece.y] += 3;
+                        attack[piece.x][piece.y + 1] += 3; 
+                    }
                         
-                        break;
-                    case 0:
-                        if (buff == 4)
-                            attack[piece.x][piece.y] += 11;
-                        else
-                            attack[piece.x][piece.y] += 10;
-                        break;
-                    default:
-                        break;
-                }    
-            }
-            else if (piece.x == 0)
-            {
-                switch (piece.type)
-                {
-                    case 3:
-                        if (buff == 3)
-                        {
-                            attack[piece.x][piece.y] += 5;
-                            attack[piece.x][piece.y - 1] += 5;
-                            attack[piece.x][piece.y + 1] += 5;
-                            attack[piece.x + 1][piece.y + 1] += 5;
-                            attack[piece.x + 1][piece.y - 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 4;
-                            attack[piece.x][piece.y - 1] += 4;
-                            attack[piece.x][piece.y + 1] += 4;
-                            attack[piece.x + 1][piece.y + 1] += 4;
-                            attack[piece.x + 1][piece.y - 1] += 4;
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 3;
-                            attack[piece.x][piece.y - 1] += 3;
-                            attack[piece.x][piece.y + 1] += 3;
-                            attack[piece.x + 1][piece.y + 1] += 3;
-                            attack[piece.x + 1][piece.y - 1] += 3;
-                        }
-                        
-                        break;
-                    case 2:
-                        if (buff == 2)
-                        {
-                            attack[piece.x][piece.y] += 10;
-                            attack[piece.x][piece.y - 1] += 10;
-                            attack[piece.x][piece.y + 1] += 10;
-                            attack[piece.x + 1][piece.y] += 5;
-                            attack[piece.x + 1][piece.y - 1] += 5;
-                            attack[piece.x + 1][piece.y + 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 6;
-                            attack[piece.x][piece.y - 1] += 6;
-                            attack[piece.x][piece.y + 1] += 6;
-                            attack[piece.x + 1][piece.y] += 3;
-                            attack[piece.x + 1][piece.y - 1] += 3;
-                            attack[piece.x + 1][piece.y + 1] += 3; 
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 4;
-                            attack[piece.x][piece.y - 1] += 4;
-                            attack[piece.x][piece.y + 1] += 4;
-                            attack[piece.x + 1][piece.y] += 2;
-                            attack[piece.x + 1][piece.y - 1] += 2;
-                            attack[piece.x + 1][piece.y + 1] += 2;
-                        }
-                        
-                        break;
-                    case 1:
-                        if (buff != 5)
-                        {
-                            attack[piece.x][piece.y] += 8;
-                            attack[piece.x + 1][piece.y] += 4;
-                            attack[piece.x][piece.y - 1] += 4;
-                            attack[piece.x][piece.y + 1] += 4; 
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 6;
-                            attack[piece.x + 1][piece.y] += 3;
-                            attack[piece.x][piece.y - 1] += 3;
-                            attack[piece.x][piece.y + 1] += 3;
-                        }
-                        
-                        break;
-                    case 0:
-                        if (buff == 4)
-                            attack[piece.x][piece.y] += 11;
-                        else
-                            attack[piece.x][piece.y] += 10;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else if (piece.y == 0)
-            {
-                switch (piece.type)
-                {
-                    case 3:
-                        if (buff == 3)
-                        {
-                            attack[piece.x][piece.y] += 5;
-                            attack[piece.x - 1][piece.y] += 5;
-                            attack[piece.x + 1][piece.y] += 5;
-                            attack[piece.x - 1][piece.y + 1] += 5;
-                            attack[piece.x + 1][piece.y + 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 4;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x + 1][piece.y] += 4;
-                            attack[piece.x - 1][piece.y + 1] += 4;
-                            attack[piece.x + 1][piece.y + 1] += 4;
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 3;
-                            attack[piece.x - 1][piece.y] += 3;
-                            attack[piece.x + 1][piece.y] += 3;
-                            attack[piece.x - 1][piece.y + 1] += 3;
-                            attack[piece.x + 1][piece.y + 1] += 3;
-                        }
-                        
-                        break;
-                    case 2:
-                        if (buff == 2)
-                        {
-                            attack[piece.x][piece.y] += 10;
-                            attack[piece.x - 1][piece.y] += 10;
-                            attack[piece.x + 1][piece.y] += 10;
-                            attack[piece.x][piece.y + 1] += 5;
-                            attack[piece.x - 1][piece.y + 1] += 5;
-                            attack[piece.x + 1][piece.y + 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 6;
-                            attack[piece.x - 1][piece.y] += 6;
-                            attack[piece.x + 1][piece.y] += 6;
-                            attack[piece.x][piece.y + 1] += 3;
-                            attack[piece.x - 1][piece.y + 1] += 3;
-                            attack[piece.x + 1][piece.y + 1] += 3; 
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 4;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x + 1][piece.y] += 4;
-                            attack[piece.x][piece.y + 1] += 2;
-                            attack[piece.x - 1][piece.y + 1] += 2;
-                            attack[piece.x + 1][piece.y + 1] += 2;
-                        }
-                        
-                        break;
-                    case 1:
-                        if (buff != 5)
-                        {
-                            attack[piece.x][piece.y] += 8;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x + 1][piece.y] += 4;
-                            attack[piece.x][piece.y + 1] += 4;
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 6;
-                            attack[piece.x - 1][piece.y] += 3;
-                            attack[piece.x + 1][piece.y] += 3;
-                            attack[piece.x][piece.y + 1] += 3;
-                        }
-                        
-                        break;
-                    case 0:
-                        if (buff == 4)
-                            attack[piece.x][piece.y] += 11;
-                        else
-                            attack[piece.x][piece.y] += 10;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            else
-            {
-                switch (piece.type)
-                {
-                    case 3:
-                        if (buff == 3)
-                        {
-                            attack[piece.x][piece.y] += 5;
-                            attack[piece.x - 1][piece.y] += 5;
-                            attack[piece.x + 1][piece.y] += 5;
-                            attack[piece.x - 1][piece.y - 1] += 5;
-                            attack[piece.x + 1][piece.y - 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 4;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x + 1][piece.y] += 4;
-                            attack[piece.x - 1][piece.y - 1] += 4;
-                            attack[piece.x + 1][piece.y - 1] += 4;
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 3;
-                            attack[piece.x - 1][piece.y] += 3;
-                            attack[piece.x + 1][piece.y] += 3;
-                            attack[piece.x - 1][piece.y - 1] += 3;
-                            attack[piece.x + 1][piece.y - 1] += 3;
-                        }
-                        
-                        break;
-                    case 2:
-                        if (buff == 2)
-                        {
-                            attack[piece.x][piece.y] += 10;
-                            attack[piece.x - 1][piece.y] += 10;
-                            attack[piece.x + 1][piece.y] += 10;
-                            attack[piece.x][piece.y - 1] += 5;
-                            attack[piece.x - 1][piece.y - 1] += 5;
-                            attack[piece.x + 1][piece.y - 1] += 5;
-                        }
-                        else if (buff == 4)
-                        {
-                            attack[piece.x][piece.y] += 6;
-                            attack[piece.x - 1][piece.y] += 6;
-                            attack[piece.x + 1][piece.y] += 6;
-                            attack[piece.x][piece.y - 1] += 3;
-                            attack[piece.x - 1][piece.y - 1] += 3;
-                            attack[piece.x + 1][piece.y - 1] += 3; 
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 4;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x + 1][piece.y] += 4;
-                            attack[piece.x][piece.y - 1] += 2;
-                            attack[piece.x - 1][piece.y - 1] += 2;
-                            attack[piece.x + 1][piece.y - 1] += 2;
-                        }
-                        
-                        break;
-                    case 1:
-                        if (buff != 5)
-                        {
-                            attack[piece.x][piece.y] += 8;
-                            attack[piece.x - 1][piece.y] += 4;
-                            attack[piece.x + 1][piece.y] += 4;
-                            attack[piece.x][piece.y - 1] += 4;
-                        }
-                        else
-                        {
-                            attack[piece.x][piece.y] += 6;
-                            attack[piece.x - 1][piece.y] += 3;
-                            attack[piece.x + 1][piece.y] += 3;
-                            attack[piece.x][piece.y - 1] += 3;
-                        }
-                        
-                        break;
-                    case 0:
-                        if (buff == 4)
-                            attack[piece.x][piece.y] += 11;
-                        else
-                            attack[piece.x][piece.y] += 10;
-                        break;
-                    default:
-                        break;
-                }
+                    break;
+                case 0:
+                    if (buff == 4)
+                        attack[piece.x][piece.y] += 11;
+                    else
+                        attack[piece.x][piece.y] += 10;
+                    break;
+                default:
+                    break;
             }
         }
+        else if (piece.x == 0 && piece.y == 3)
+        {
+            switch (piece.type)
+            {
+                case 3:
+                    if (buff == 3)
+                    {
+                        attack[piece.x][piece.y] += 10;
+                        attack[piece.x + 1][piece.y] += 5;
+                        attack[piece.x][piece.y - 1] += 5;
+                        attack[piece.x + 1][piece.y - 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 8;
+                        attack[piece.x + 1][piece.y] += 4;
+                        attack[piece.x][piece.y - 1] += 4;
+                        attack[piece.x + 1][piece.y - 1] += 4;
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 6;
+                        attack[piece.x + 1][piece.y] += 3;
+                        attack[piece.x][piece.y - 1] += 3;
+                        attack[piece.x + 1][piece.y - 1] += 3;
+                    }
+                        
+                    break;
+                case 2:
+                    if (buff == 2)
+                    {
+                        attack[piece.x][piece.y] += 20;
+                        attack[piece.x + 1][piece.y] += 10;
+                        attack[piece.x][piece.y - 1] += 10;
+                        attack[piece.x + 1][piece.y - 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 12;
+                        attack[piece.x + 1][piece.y] += 6;
+                        attack[piece.x][piece.y - 1] += 6;
+                        attack[piece.x + 1][piece.y - 1] += 3; 
+                    }
+                    else
+                    {    
+                        attack[piece.x][piece.y] += 8;
+                        attack[piece.x + 1][piece.y] += 4;
+                        attack[piece.x][piece.y - 1] += 4;
+                        attack[piece.x + 1][piece.y - 1] += 2; 
+                    }
+                        
+                    break;
+                case 1:
+                    if (buff != 5)
+                    {
+                        attack[piece.x][piece.y] += 12;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x][piece.y - 1] += 4; 
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 9;
+                        attack[piece.x + 1][piece.y] += 3;
+                        attack[piece.x][piece.y - 1] += 3; 
+                    }
+                        
+                    break;
+                case 0:
+                    if (buff == 4)
+                        attack[piece.x][piece.y] += 11;
+                    else
+                        attack[piece.x][piece.y] += 10;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (piece.x == 3 && piece.y == 3)
+        {
+            switch (piece.type)
+            {
+                case 3:
+                    if (buff == 3)
+                    {
+                        attack[piece.x][piece.y] += 10;
+                        attack[piece.x - 1][piece.y] += 5;
+                        attack[piece.x][piece.y - 1] += 5;
+                        attack[piece.x - 1][piece.y - 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 8;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x][piece.y - 1] += 4;
+                        attack[piece.x - 1][piece.y - 1] += 4;
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 6;
+                        attack[piece.x - 1][piece.y] += 3;
+                        attack[piece.x][piece.y - 1] += 3;
+                        attack[piece.x - 1][piece.y - 1] += 3;
+                    }
+                        
+                    break;
+                case 2:
+                    if (buff == 2)
+                    {
+                        attack[piece.x][piece.y] += 20;
+                        attack[piece.x - 1][piece.y] += 10;
+                        attack[piece.x][piece.y - 1] += 10;
+                        attack[piece.x - 1][piece.y - 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 12;
+                        attack[piece.x - 1][piece.y] += 6;
+                        attack[piece.x][piece.y - 1] += 6;
+                        attack[piece.x - 1][piece.y - 1] += 3; 
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 8;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x][piece.y - 1] += 4;
+                        attack[piece.x - 1][piece.y - 1] += 2; 
+                    }
+                        
+                    break;
+                case 1:
+                    if (buff != 5)
+                    {
+                        attack[piece.x][piece.y] += 12;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x][piece.y - 1] += 4; 
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 9;
+                        attack[piece.x - 1][piece.y] += 3;
+                        attack[piece.x][piece.y - 1] += 3; 
+                    }
+                        
+                    break;
+                case 0:
+                    if (buff == 4)
+                        attack[piece.x][piece.y] += 11;
+                    else
+                        attack[piece.x][piece.y] += 10;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (piece.x == 3 && piece.y != 0 && piece.y != 3)
+        {
+            switch (piece.type)
+            {
+                case 3:
+                    if (buff == 3)
+                    {
+                        attack[piece.x][piece.y] += 5;
+                        attack[piece.x][piece.y - 1] += 5;
+                        attack[piece.x][piece.y + 1] += 5;
+                        attack[piece.x - 1][piece.y + 1] += 5;
+                        attack[piece.x - 1][piece.y - 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 4;
+                        attack[piece.x][piece.y - 1] += 4;
+                        attack[piece.x][piece.y + 1] += 4;
+                        attack[piece.x - 1][piece.y + 1] += 4;
+                        attack[piece.x - 1][piece.y - 1] += 4;
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 3;
+                        attack[piece.x][piece.y - 1] += 3;
+                        attack[piece.x][piece.y + 1] += 3;
+                        attack[piece.x - 1][piece.y + 1] += 3;
+                        attack[piece.x - 1][piece.y - 1] += 3;
+                    }
+                        
+                    break;
+                case 2:
+                    if (buff == 2)
+                    {
+                        attack[piece.x][piece.y] += 10;
+                        attack[piece.x][piece.y - 1] += 10;
+                        attack[piece.x][piece.y + 1] += 10;
+                        attack[piece.x - 1][piece.y] += 5;
+                        attack[piece.x - 1][piece.y - 1] += 5;
+                        attack[piece.x - 1][piece.y + 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 6;
+                        attack[piece.x][piece.y - 1] += 6;
+                        attack[piece.x][piece.y + 1] += 6;
+                        attack[piece.x - 1][piece.y] += 3;
+                        attack[piece.x - 1][piece.y - 1] += 3;
+                        attack[piece.x - 1][piece.y + 1] += 3; 
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 4;
+                        attack[piece.x][piece.y - 1] += 4;
+                        attack[piece.x][piece.y + 1] += 4;
+                        attack[piece.x - 1][piece.y] += 2;
+                        attack[piece.x - 1][piece.y - 1] += 2;
+                        attack[piece.x - 1][piece.y + 1] += 2;
+                    }
+                        
+                    break;
+                case 1:
+                    if (buff != 5)
+                    {
+                        attack[piece.x][piece.y] += 8;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x][piece.y - 1] += 4;
+                        attack[piece.x][piece.y + 1] += 4; 
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 6;
+                        attack[piece.x - 1][piece.y] += 3;
+                        attack[piece.x][piece.y - 1] += 3;
+                        attack[piece.x][piece.y + 1] += 3;
+                    }
+                        
+                    break;
+                case 0:
+                    if (buff == 4)
+                        attack[piece.x][piece.y] += 11;
+                    else
+                        attack[piece.x][piece.y] += 10;
+                    break;
+                default:
+                        break;
+            }    
+        }
+        else if (piece.x == 0 && piece.y != 0 && piece.y != 3)
+        {
+            switch (piece.type)
+            {
+                case 3:
+                    if (buff == 3)
+                    {
+                        attack[piece.x][piece.y] += 5;
+                        attack[piece.x][piece.y - 1] += 5;
+                        attack[piece.x][piece.y + 1] += 5;
+                        attack[piece.x + 1][piece.y + 1] += 5;
+                        attack[piece.x + 1][piece.y - 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 4;
+                        attack[piece.x][piece.y - 1] += 4;
+                        attack[piece.x][piece.y + 1] += 4;
+                        attack[piece.x + 1][piece.y + 1] += 4;
+                        attack[piece.x + 1][piece.y - 1] += 4;
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 3;
+                        attack[piece.x][piece.y - 1] += 3;
+                        attack[piece.x][piece.y + 1] += 3;
+                        attack[piece.x + 1][piece.y + 1] += 3;
+                        attack[piece.x + 1][piece.y - 1] += 3;
+                    }
+                        
+                    break;
+                case 2:
+                    if (buff == 2)
+                    {
+                        attack[piece.x][piece.y] += 10;
+                        attack[piece.x][piece.y - 1] += 10;
+                        attack[piece.x][piece.y + 1] += 10;
+                        attack[piece.x + 1][piece.y] += 5;
+                        attack[piece.x + 1][piece.y - 1] += 5;
+                        attack[piece.x + 1][piece.y + 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 6;
+                        attack[piece.x][piece.y - 1] += 6;
+                        attack[piece.x][piece.y + 1] += 6;
+                        attack[piece.x + 1][piece.y] += 3;
+                        attack[piece.x + 1][piece.y - 1] += 3;
+                        attack[piece.x + 1][piece.y + 1] += 3; 
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 4;
+                        attack[piece.x][piece.y - 1] += 4;
+                        attack[piece.x][piece.y + 1] += 4;
+                        attack[piece.x + 1][piece.y] += 2;
+                        attack[piece.x + 1][piece.y - 1] += 2;
+                        attack[piece.x + 1][piece.y + 1] += 2;
+                    }
+                        
+                    break;
+                case 1:
+                    if (buff != 5)
+                    {
+                        attack[piece.x][piece.y] += 8;
+                        attack[piece.x + 1][piece.y] += 4;
+                        attack[piece.x][piece.y - 1] += 4;
+                        attack[piece.x][piece.y + 1] += 4; 
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 6;
+                        attack[piece.x + 1][piece.y] += 3;
+                        attack[piece.x][piece.y - 1] += 3;
+                        attack[piece.x][piece.y + 1] += 3;
+                    }
+                        
+                    break;
+                case 0:
+                    if (buff == 4)
+                        attack[piece.x][piece.y] += 11;
+                    else
+                        attack[piece.x][piece.y] += 10;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (piece.y == 0 && piece.x != 0 && piece.x != 3)
+        {
+            switch (piece.type)
+            {
+                case 3:
+                    if (buff == 3)
+                    {
+                        attack[piece.x][piece.y] += 5;
+                        attack[piece.x - 1][piece.y] += 5;
+                        attack[piece.x + 1][piece.y] += 5;
+                        attack[piece.x - 1][piece.y + 1] += 5;
+                        attack[piece.x + 1][piece.y + 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 4;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x + 1][piece.y] += 4;
+                        attack[piece.x - 1][piece.y + 1] += 4;
+                        attack[piece.x + 1][piece.y + 1] += 4;
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 3;
+                        attack[piece.x - 1][piece.y] += 3;
+                        attack[piece.x + 1][piece.y] += 3;
+                        attack[piece.x - 1][piece.y + 1] += 3;
+                        attack[piece.x + 1][piece.y + 1] += 3;
+                    }
+                        
+                    break;
+                case 2:
+                    if (buff == 2)
+                    {
+                        attack[piece.x][piece.y] += 10;
+                        attack[piece.x - 1][piece.y] += 10;
+                        attack[piece.x + 1][piece.y] += 10;
+                        attack[piece.x][piece.y + 1] += 5;
+                        attack[piece.x - 1][piece.y + 1] += 5;
+                        attack[piece.x + 1][piece.y + 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 6;
+                        attack[piece.x - 1][piece.y] += 6;
+                        attack[piece.x + 1][piece.y] += 6;
+                        attack[piece.x][piece.y + 1] += 3;
+                        attack[piece.x - 1][piece.y + 1] += 3;
+                        attack[piece.x + 1][piece.y + 1] += 3; 
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 4;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x + 1][piece.y] += 4;
+                        attack[piece.x][piece.y + 1] += 2;
+                        attack[piece.x - 1][piece.y + 1] += 2;
+                        attack[piece.x + 1][piece.y + 1] += 2;
+                    }
+                        
+                    break;
+                case 1:
+                    if (buff != 5)
+                    {
+                        attack[piece.x][piece.y] += 8;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x + 1][piece.y] += 4;
+                        attack[piece.x][piece.y + 1] += 4;
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 6;
+                        attack[piece.x - 1][piece.y] += 3;
+                        attack[piece.x + 1][piece.y] += 3;
+                        attack[piece.x][piece.y + 1] += 3;
+                    }
+                        
+                    break;
+                case 0:
+                    if (buff == 4)
+                        attack[piece.x][piece.y] += 11;
+                    else
+                        attack[piece.x][piece.y] += 10;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (piece.y == 3 && piece.x != 0 && piece.x != 3)
+        {
+            switch (piece.type)
+            {
+                case 3:
+                    if (buff == 3)
+                    {
+                        attack[piece.x][piece.y] += 5;
+                        attack[piece.x - 1][piece.y] += 5;
+                        attack[piece.x + 1][piece.y] += 5;
+                        attack[piece.x - 1][piece.y - 1] += 5;
+                        attack[piece.x + 1][piece.y - 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 4;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x + 1][piece.y] += 4;
+                        attack[piece.x - 1][piece.y - 1] += 4;
+                        attack[piece.x + 1][piece.y - 1] += 4;
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 3;
+                        attack[piece.x - 1][piece.y] += 3;
+                        attack[piece.x + 1][piece.y] += 3;
+                        attack[piece.x - 1][piece.y - 1] += 3;
+                        attack[piece.x + 1][piece.y - 1] += 3;
+                    }
+                        
+                    break;
+                case 2:
+                    if (buff == 2)
+                    {
+                        attack[piece.x][piece.y] += 10;
+                        attack[piece.x - 1][piece.y] += 10;
+                        attack[piece.x + 1][piece.y] += 10;
+                        attack[piece.x][piece.y - 1] += 5;
+                        attack[piece.x - 1][piece.y - 1] += 5;
+                        attack[piece.x + 1][piece.y - 1] += 5;
+                    }
+                    else if (buff == 4)
+                    {
+                        attack[piece.x][piece.y] += 6;
+                        attack[piece.x - 1][piece.y] += 6;
+                        attack[piece.x + 1][piece.y] += 6;
+                        attack[piece.x][piece.y - 1] += 3;
+                        attack[piece.x - 1][piece.y - 1] += 3;
+                        attack[piece.x + 1][piece.y - 1] += 3; 
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 4;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x + 1][piece.y] += 4;
+                        attack[piece.x][piece.y - 1] += 2;
+                        attack[piece.x - 1][piece.y - 1] += 2;
+                        attack[piece.x + 1][piece.y - 1] += 2;
+                    }
+                        
+                    break;
+                case 1:
+                    if (buff != 5)
+                    {
+                        attack[piece.x][piece.y] += 8;
+                        attack[piece.x - 1][piece.y] += 4;
+                        attack[piece.x + 1][piece.y] += 4;
+                        attack[piece.x][piece.y - 1] += 4;
+                    }
+                    else
+                    {
+                        attack[piece.x][piece.y] += 6;
+                        attack[piece.x - 1][piece.y] += 3;
+                        attack[piece.x + 1][piece.y] += 3;
+                        attack[piece.x][piece.y - 1] += 3;
+                    }
+                        
+                    break;
+                case 0:
+                    if (buff == 4)
+                        attack[piece.x][piece.y] += 11;
+                    else
+                        attack[piece.x][piece.y] += 10;
+                    break;
+                default:
+                    break;
+            }
+        }
+        
         
     }
     
@@ -896,6 +905,12 @@ int main()
 {
     ChessPiece playerA[n];
     ChessPiece playerB[n];
+    type_a[n];
+    x_a[n];
+    y_a[n];
+    type_b[n];
+    x_b[n];
+    y_b[n];
     
     int** attack_a = create2DArray(BOARD_SIZE, BOARD_SIZE);
     int** attack_b = create2DArray(BOARD_SIZE, BOARD_SIZE);
@@ -906,9 +921,12 @@ int main()
     for (int i = 0;i < n; i++){
         printf("playerA chess num %d\n", i+1);
         printf("type: ");
-        scanf("%d", &(playerA[i].type));
+        type_a[i] = RandomInteger();
+        printf("%d\n", type_a[i])
         printf("(x,y): ");
-        scanf("%d %d", &(playerA[i].x), &(playerA[i].y));
+        x_a[i] = RandomInteger();
+        y_a[i] = RandomInteger();
+        printf("%d %d\n", x_a[i], y_a[i])
         printf("playerB chess num %d\n", i+1);
         printf("type: ");
         scanf("%d", &(playerB[i].type));
