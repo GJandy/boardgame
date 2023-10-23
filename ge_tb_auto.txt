@@ -1,0 +1,130 @@
+`timescale 1ns/10ps
+/*********Godden pattern form [23:0]teamA, [23:0]teamB, [1:0]correct_win**********/
+module ge_tb;
+
+  reg [23:0] teamA;
+  reg [23:0] teamB;
+  wire [1:0] win;
+  // for debug used 
+  
+  wire [2:0] A_survive;
+  wire [2:0] B_survive;
+  wire [15:0] A_count;
+  wire [15:0] B_count;
+  wire [95:0] A_all_blood;
+  wire [95:0] B_all_blood;
+  wire [95:0] A_all_attack;
+  wire [95:0] B_all_attack;
+  
+  // ^^^debug
+  
+  integer file;
+  integer i;
+  integer pattern_num;
+  reg [1:0] correct_win;
+  integer pass_num;
+  integer fail_num;
+  
+  
+  parameter SIMULATION_END_TIME = 100000;
+
+    /*please remember to change to your own module */
+  SoC_GE U0 (
+    .teamA(teamA),
+    .teamB(teamB),
+    .win(win),
+	.A_survive(A_survive),
+	.B_survive(B_survive),
+	.B_count(B_count),
+	.A_count(A_count),
+	.A_all_blood(A_all_blood),
+	.B_all_blood(B_all_blood),
+	.A_all_attack(A_all_attack),
+	.B_all_attack(B_all_attack)
+  );
+
+  
+    /* Force stop simulation */
+  initial begin 
+    #SIMULATION_END_TIME;
+    $display("****Time Out! Stop Simulation*****");
+    $finish;
+  end 
+  
+  
+   /* Open the file */
+	
+  initial begin 
+
+    file = $fopen("pattern.txt", "rb");
+    if (file == 0) begin
+      $display("File Open Fail. Stop Simulation");
+      $finish;
+    end else begin
+      $display("File Open Successfully");
+    end
+
+    // Read the file in a loop using a while loop
+    i = 1;
+	pass_num = 0;
+	fail_num = 0;
+    while (!$feof(file)) begin
+      $fscanf(file, "%b %b %b ", teamA, teamB, correct_win);
+      #10;
+	  
+      if (correct_win === win) begin
+        $display("case %d Pass", i);
+		
+		pass_num = pass_num +1;
+      end 
+	  else begin
+        $display("case %d Fail", i);
+        $display("win=%b : expect win=%b", win, correct_win);
+		//debug
+		
+		$display("A_survive=%d : B_survive=%d", A_survive, B_survive);
+		$display("A_count=%b : B_count=%b", A_count, B_count); 
+		$display("\n");
+		$display(" A_all_blood %b",  A_all_blood); 
+		$display("\n");
+		$display(" B_all_blood %b",  B_all_blood); 
+		$display("\n");
+		$display(" A_all_attack %b",  A_all_attack); 
+		$display("\n");
+		$display(" B_all_attack %b",  B_all_attack); 
+		$display("\n");
+		$display("=========================== FAIL! ===========================");
+
+		
+		//debug
+		fail_num = fail_num +1;
+      end
+	  
+	  
+      i = i + 1;
+    end
+	
+	pattern_num = i-1;
+    $fclose(file);
+	$display("Closing File");
+	$display("Pattern number=%d", pattern_num);
+	$display("Pass:%d Fail:%d", pass_num, fail_num);
+	
+	if (pass_num === pattern_num) begin 
+		$display("\n");
+		$display("ALL PATTERN PASS!");
+		$display("\n");
+	    $display("    #    #       #          ######     #     #####   #####  ");
+		$display("   # #   #       #          #     #   # #   #     # #     # ");
+		$display("  #   #  #       #          #     #  #   #  #       #       ");
+		$display(" #     # #       #          ######  #     #  #####   #####  ");
+		$display(" ####### #       #          #       #######       #       # ");
+		$display(" #     # #       #          #       #     # #     # #     # ");
+		$display(" #     # ####### #######    #       #     #  #####   #####  ");
+		$display("\n");
+	end
+	
+    $finish;
+  end
+
+endmodule
